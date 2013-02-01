@@ -1,0 +1,13 @@
+# backup files
+*~
+
+# build
+build
+out
+.gradle
+
+# intellij idea
+*.iml
+*.ipr
+*.iws
+

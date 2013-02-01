@@ -1,0 +1,36 @@
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'groovy'
+
+group   = 'pl.helenium.learning.groovy'
+version = '0.1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+ext.versions = [
+    slf4j: '1.+'
+]
+
+dependencies {
+    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.+'
+
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.+'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: versions.slf4j
+    compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.+'
+
+    runtime group: 'org.slf4j', name: 'jcl-over-slf4j', version: versions.slf4j
+
+    testCompile (
+	    [group: 'org.testng', name: 'testng', version: '6.+'],
+	    [group: 'org.mockito', name: 'mockito-all', version: '1.+'],
+    )
+
+    testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+}
+
+test {
+    useTestNG()
+}
