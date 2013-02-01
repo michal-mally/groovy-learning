@@ -2,6 +2,7 @@
 *~
 
 # build
+target
 build
 out
 .gradle
