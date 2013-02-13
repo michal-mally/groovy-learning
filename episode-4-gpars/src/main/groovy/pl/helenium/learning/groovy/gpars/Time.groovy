@@ -1,18 +1,18 @@
 package pl.helenium.learning.groovy.gpars
 
-import groovy.util.logging.Slf4j
 import org.apache.commons.lang3.time.StopWatch
 
-@Slf4j
 final class Time {
 
-    static <T> T time(String id, Closure<T> closure) {
+    static void time(Map params, Closure<?> closure) {
         def watch = new StopWatch()
-        watch.start()
-        def clReturn = closure()
-        watch.stop()
-        log.info("Task ${id} took ${watch.time}ms to complete.")
-        return clReturn
+        (params.times?:5).times {
+            watch.reset()
+            watch.start()
+            closure()
+            watch.stop()
+            println "Task ${params.id} took ${watch.time}ms to complete."
+        }
     }
 
     private Time() {
