@@ -1,7 +1,7 @@
 package pl.helenium.learning.groovy.gpars.forkjoin
 
 import static pl.helenium.learning.groovy.gpars.Time.time
-import static pl.helenium.learning.groovy.gpars.forkjoin.RandomNumbers.randomNumbers
+import static pl.helenium.learning.groovy.gpars.forkjoin._0_RandomNumbers.randomNumbers
 
 class Naive {
 

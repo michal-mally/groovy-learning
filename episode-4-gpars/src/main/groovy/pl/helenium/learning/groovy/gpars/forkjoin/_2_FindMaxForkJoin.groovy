@@ -5,7 +5,7 @@ import java.util.concurrent.RecursiveTask
 
 import static java.lang.Math.max
 import static pl.helenium.learning.groovy.gpars.Time.time
-import static pl.helenium.learning.groovy.gpars.forkjoin.RandomNumbers.randomNumbers
+import static pl.helenium.learning.groovy.gpars.forkjoin._0_RandomNumbers.randomNumbers
 
 class MaxTask extends RecursiveTask<Integer> {
 
