@@ -4,7 +4,7 @@ import org.testng.annotations.Test
 class Closures {
 
     @Test
-    void closuresAreObject() {
+    void 'closures are objects'() {
         def cl = { a, b ->
             a + b
         }
@@ -26,14 +26,14 @@ class Closures {
     }
 
     @Test
-    void closureDefaultArgumentIsIt() {
+    void 'closure default argument is "it"'() {
         def cl = { it * 2 }
 
         assert cl(5) == 5 * 2
     }
 
     @Test
-    void thereAreALotOfWaysToExpressYourself() {
+    void 'there are a lot of ways to express yourself'() {
         def cl = { acc, val -> acc + val }
 
         assert [1, 2, 3].inject(0, cl) == 6
@@ -41,7 +41,7 @@ class Closures {
     }
 
     @Test
-    void makingUseOfClosures() {
+    void 'making use of closures'() {
         assert (1..4).findAll { it % 2 == 0} == [2, 4]
 
         def findAll = { Collection c, Closure test ->
@@ -59,7 +59,7 @@ class Closures {
     }
 
     @Test
-    void thereIsThisOwnerAndDelegate() {
+    void 'there is this, owner and delegate'() {
         def cl = {
             println "cl.this = ${this.class}"
             println "cl.owner = ${owner.class}"
@@ -78,13 +78,13 @@ class Closures {
     }
 
     @Test
-    void makingUseOfDelegate() {
+    void 'making use of delegate'() {
         def john = new Person()
 
         def with = { target, Closure cl ->
-            def cloned = cl.clone()
+            Closure cloned = cl.clone()
             cloned.delegate = target
-            cloned.resolveStrategy = Closure.DELEGATE_FIRST
+            cloned.resolveStrategy = DELEGATE_FIRST
             cloned()
         }
 
@@ -108,7 +108,7 @@ class Closures {
     }
 
     @Test
-    void accumulatorTest() {
+    void 'test of accumulator'() {
         def acc = { n -> { i -> n + i } }
         assert acc(5)(6) == 5 + 6
 
@@ -118,7 +118,7 @@ class Closures {
     }
 
     @Test
-    void thereIsMore() {
+    void 'there is more'() {
        assert "Yes, there is!"
     }
 

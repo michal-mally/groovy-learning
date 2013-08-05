@@ -7,14 +7,14 @@ import java.util.concurrent.ThreadLocalRandom
 class MetaProgramming {
 
     @Test
-    void thereAreNoSpecialGroovyClasses() {
+    void 'there are no special groovy classes'() {
         assert "123" instanceof String
         assert 1 instanceof Integer
         assert [1, 2, 3] instanceof ArrayList
     }
 
     @Test
-    void thereIsNoMagic() {
+    void 'metaclass is not a magic'() {
         def classes = [String, Integer, List]
 
         classes.each { clazz ->
@@ -34,14 +34,14 @@ class MetaProgramming {
     }
 
     @Test
-    void allCallsAreMadeThroughMetaObjectProtocol() {
+    void 'all calls are made through MetaObjectProtocol'() {
         assert "123 456".center(15) == InvokerHelper.invokeMethod("123 456", "center", [15])
     }
 
     // how Groovy and how Java calls the methods
 
     @Test
-    void addingUsefulMethodsToClass() {
+    void 'adding useful methods to class'() {
         Integer.metaClass.random << { -> ThreadLocalRandom.current().nextInt delegate }
 
         10.times {
@@ -61,14 +61,14 @@ class MetaProgramming {
     }
 
     @Test
-    void methodMissingHook() {
+    void 'methodMissing() hook'() {
         def dynamic = new DynamicClass()
         assert dynamic.thereIsNoSpoon1() == "Yes, there is a Spoon1!"
         assert dynamic.thereIsNoWar() == "Yes, there is a War!"
     }
 
     @Test
-    void propertyMissingHook() {
+    void 'propertyMissing() hook'() {
         def dynamic = new DynamicClass()
         dynamic.prop_one = "SPOON"
         assert dynamic.eno_porp == "SPOON"
@@ -81,7 +81,7 @@ class MetaProgramming {
     //   GroovyObject.getProperty()
 
     @Test
-    void replaceMetaclass() {
+    void 'replace metaclass'() {
         assert new Adder().add(10, 10) == 100
 
         def newMetaClass = new DelegatingMetaClass(Adder) {
@@ -107,7 +107,7 @@ class MetaProgramming {
     }
 
     @Test
-    void categories() {
+    void 'categories'() {
         use(TimeCategory) {
             println 1.month.from.now + 1.days
             println 2.days.ago

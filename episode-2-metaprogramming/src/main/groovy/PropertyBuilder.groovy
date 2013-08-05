@@ -1,14 +1,16 @@
+import static groovy.lang.Closure.DELEGATE_FIRST
+
 class PropertyBuilder {
 
-    Properties props = new Properties()
+    private final props = new Properties()
 
-    private path = []
+    private final path = []
 
     def methodMissing(String name, args) {
         path.push(name)
 
         Closure cl = args[0].clone()
-        cl.resolveStrategy = Closure.DELEGATE_FIRST
+        cl.resolveStrategy = DELEGATE_FIRST
         cl.delegate = this
         cl()
 

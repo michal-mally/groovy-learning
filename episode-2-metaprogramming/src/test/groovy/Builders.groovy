@@ -4,7 +4,7 @@ import org.testng.annotations.Test
 class Builders {
 
     @Test
-    void xml() {
+    void 'xml builder'() {
         def builder = new MarkupBuilder()
 
         builder.customers {
@@ -28,7 +28,7 @@ class Builders {
     }
 
     @Test
-    void custom() {
+    void 'custom builder'() {
         def builder = new PropertyBuilder()
         builder.com {
             mach {

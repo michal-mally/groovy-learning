@@ -15,9 +15,7 @@ ext.versions = [
 ]
 
 dependencies {
-    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '2.0.+'
-
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.+'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.+'
     compile group: 'org.slf4j', name: 'slf4j-api', version: versions.slf4j
     compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.+'
 
@@ -34,3 +32,4 @@ dependencies {
 test {
     useTestNG()
 }
+
