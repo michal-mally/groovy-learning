@@ -84,7 +84,7 @@ class Closures {
         def with = { target, Closure cl ->
             Closure cloned = cl.clone()
             cloned.delegate = target
-            cloned.resolveStrategy = DELEGATE_FIRST
+            cloned.resolveStrategy = Closure.DELEGATE_FIRST
             cloned()
         }
 
@@ -109,7 +109,9 @@ class Closures {
 
     @Test
     void 'test of accumulator'() {
-        def acc = { n -> { i -> n + i } }
+        def acc = { n ->
+            { i -> n + i }
+        }
         assert acc(5)(6) == 5 + 6
 
         def plus = { a, b -> a + b }
@@ -119,7 +121,7 @@ class Closures {
 
     @Test
     void 'there is more'() {
-       assert "Yes, there is!"
+       assert 'Yes, there is!'
     }
 
 }
