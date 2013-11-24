@@ -32,7 +32,7 @@ class OrderItemTest {
         ]
     }
 
-    @Test(dataProvider = 'invalid params', expectedExceptions = OrderException.class)
+    @Test(dataProvider = 'invalid params', expectedExceptions = OrderException)
     void 'shall not allow to create OrderItem with invalid parameters'(String code, String name, BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
         // when
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)

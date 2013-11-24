@@ -8,7 +8,7 @@ import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBui
 
 class OrderTest {
 
-    @Test(expectedExceptions = OrderException.class)
+    @Test(expectedExceptions = OrderException)
     void 'shall not allow to close empty order'() {
         // given
         final Order order = new Order('order number 1234')
@@ -20,7 +20,7 @@ class OrderTest {
         // exception expected
     }
 
-    @Test(expectedExceptions = OrderException.class)
+    @Test(expectedExceptions = OrderException)
     void 'shall not allow to add items to already closed order'() {
         // given
         final Order order = new Order('order number 1234')
@@ -48,7 +48,7 @@ class OrderTest {
         assertTrue(order.isClosed(), 'Order shall be closed but is not!')
     }
 
-    @Test(expectedExceptions = OrderException.class)
+    @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
         final OrderItem item = orderItem().build()
@@ -92,7 +92,7 @@ class OrderTest {
         assertNull(itemByCode, 'OrderItem returned by getItemByCode() shall be null!')
     }
 
-    @Test(expectedExceptions = UnsupportedOperationException.class)
+    @Test(expectedExceptions = UnsupportedOperationException)
     void 'shall not allow to add items to collection obtained by getItems()'() {
         // given
         final Order order = new Order('order number 1234')
