@@ -1,23 +1,11 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
 
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
 import static java.util.concurrent.ThreadLocalRandom.current as random
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
 class OrderTest {
-
-    @BeforeClass
-    void mixinOrderCategory() {
-        Order.mixin(OrderCategory)
-    }
-
-    @AfterClass
-    void mixoutOrderCategory() {
-        Order.metaClass = null
-    }
 
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to close empty order'() {
@@ -62,7 +50,7 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        def item = orderItem()
+        def item = orderItem().build()
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -89,7 +77,7 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        def item = orderItem()
+        def item = orderItem().build()
         def order = new Order('order number 1234')
                 .addItem(item)
 
