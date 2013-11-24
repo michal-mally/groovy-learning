@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.testng.Assert.*;
+import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem;
 
 public class OrderTest {
 
@@ -29,11 +30,11 @@ public class OrderTest {
     public void shallNotAllowToAddItemsToAlreadyClosedOrder() {
         // given
         final Order order = new Order("order number 1234")
-                .addItem(orderItemWithCode("item 1"))
+                .addItem(orderItem().build())
                 .close();
 
         // when
-        order.addItem(orderItemWithCode("item 2"));
+        order.addItem(orderItem().build());
 
         // then
         // exception expected
@@ -43,7 +44,7 @@ public class OrderTest {
     public void shallCLoseOnAlreadyClosedOrderHaveNoEffect() {
         // given
         final Order order = new Order("order number 1234")
-                .addItem(orderItemWithCode("item 1"))
+                .addItem(orderItem().build())
                 .close();
 
         // when
@@ -56,12 +57,14 @@ public class OrderTest {
     @Test(expectedExceptions = OrderException.class)
     public void shallNotAllowToAddItemWithTheSameCodeTwice() {
         // given
-        final String orderItemCode = "item 1";
+        final OrderItem item = orderItem().build();
         final Order order = new Order("order number 1234")
-                .addItem(orderItemWithCode(orderItemCode));
+                .addItem(item);
 
         // when
-        order.addItem(orderItemWithCode(orderItemCode));
+        order.addItem(orderItem()
+                .withCode(item.getCode())
+                .build());
 
         // then
         // exception expected
@@ -70,13 +73,12 @@ public class OrderTest {
     @Test
     public void shallFindAddedItemByItsCode() {
         // given
-        final String orderItemCode = "item 1";
-        final OrderItem item = orderItemWithCode(orderItemCode);
+        final OrderItem item = orderItem().build();
         final Order order = new Order("order number 1234")
                 .addItem(item);
 
         // when
-        final OrderItem itemByCode = order.getItemByCode(orderItemCode);
+        final OrderItem itemByCode = order.getItemByCode(item.getCode());
 
         // then
         assertSame(itemByCode, item, "OrderItem returned by getItemByCode() shall return the same instance as was added!");
@@ -85,13 +87,12 @@ public class OrderTest {
     @Test
     public void shallReturnNullIfItemIsNotFoundByCode() {
         // given
-        final String orderItemCode = "item 1";
-        final OrderItem item = orderItemWithCode(orderItemCode);
+        final OrderItem item = orderItem().build();
         final Order order = new Order("order number 1234")
                 .addItem(item);
 
         // when
-        final OrderItem itemByCode = order.getItemByCode("item 2");
+        final OrderItem itemByCode = order.getItemByCode("other item code than " + item.getCode());
 
         // then
         assertNull(itemByCode, "OrderItem returned by getItemByCode() shall be null!");
@@ -103,7 +104,7 @@ public class OrderTest {
         final Order order = new Order("order number 1234");
 
         // when
-        order.getItems().add(orderItemWithCode("item 1"));
+        order.getItems().add(orderItem().build());
 
         // then
         // exception expected
@@ -118,7 +119,7 @@ public class OrderTest {
 
         final List<OrderItem> itemsAdded = new ArrayList<>();
         for (int i = 0; i < itemCount; i++) {
-            final OrderItem item = orderItemWithCode(randomCode());
+            final OrderItem item = orderItem().build();
             order.addItem(item);
             itemsAdded.add(item);
         }
@@ -139,10 +140,7 @@ public class OrderTest {
 
         BigDecimal expectedNetTotal = BigDecimal.ZERO;
         for (int i = 0; i < itemCount; i++) {
-            final BigDecimal quantity = randomBigDecimal(10_000);
-            final BigDecimal netPricePerPiece = randomBigDecimal(10_000);
-            final BigDecimal vatRate = randomBigDecimal(1_00);
-            final OrderItem item = orderItemWithQuantityNetPricePerPieceAndVatRate(quantity, netPricePerPiece, vatRate);
+            final OrderItem item = orderItem().build();
             order.addItem(item);
 
             expectedNetTotal = expectedNetTotal.add(item.getNetTotal());
@@ -164,10 +162,7 @@ public class OrderTest {
 
         BigDecimal expectedGrossTotal = BigDecimal.ZERO;
         for (int i = 0; i < itemCount; i++) {
-            final BigDecimal quantity = randomBigDecimal(10_000);
-            final BigDecimal netPricePerPiece = randomBigDecimal(10_000);
-            final BigDecimal vatRate = randomBigDecimal(1_00);
-            final OrderItem item = orderItemWithQuantityNetPricePerPieceAndVatRate(quantity, netPricePerPiece, vatRate);
+            final OrderItem item = orderItem().build();
             order.addItem(item);
 
             expectedGrossTotal = expectedGrossTotal.add(item.getGrossTotal());
@@ -180,21 +175,8 @@ public class OrderTest {
         assertEquals(grossTotal, expectedGrossTotal);
     }
 
-    private OrderItem orderItemWithCode(String code) {
-        return new OrderItem(code, "name", new BigDecimal("1.00"), new BigDecimal("2.43"), new BigDecimal("0.23"));
-    }
-
-
-    private OrderItem orderItemWithQuantityNetPricePerPieceAndVatRate(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
-        return new OrderItem(randomCode(), "name", quantity, netPricePerPiece, vatRate);
-    }
-
     private String randomCode() {
         return randomAlphanumeric(10);
-    }
-
-    private BigDecimal randomBigDecimal(long limit) {
-        return BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), 2);
     }
 
 }
