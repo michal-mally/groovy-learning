@@ -1,10 +1,23 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
+
+import org.testng.annotations.AfterClass
+import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 
 import static java.util.concurrent.ThreadLocalRandom.current as random
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
 class OrderTest {
+
+    @BeforeClass
+    void mixinOrderCategory() {
+        Order.mixin(OrderCategory)
+    }
+
+    @AfterClass
+    void mixoutOrderCategory() {
+        Order.metaClass = null
+    }
 
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to close empty order'() {
@@ -22,11 +35,11 @@ class OrderTest {
     void 'shall not allow to add items to already closed order'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem().build())
+                .addItem(orderItem())
                 .close()
 
         // when
-        order.addItem(orderItem().build())
+        order.addItem(orderItem())
 
         // then
         // exception expected
@@ -36,7 +49,7 @@ class OrderTest {
     void 'shall cLose on already closed order have no effect'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem().build())
+                .addItem(orderItem())
                 .close()
 
         // when
@@ -49,14 +62,13 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        def item = orderItem().build()
+        def item = orderItem()
         def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
         order.addItem(orderItem()
-                .withCode(item.code)
-                .build())
+                .withCode(item.code))
 
         // then
         // exception expected
@@ -77,7 +89,7 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        def item = orderItem().build()
+        def item = orderItem()
         def order = new Order('order number 1234')
                 .addItem(item)
 
