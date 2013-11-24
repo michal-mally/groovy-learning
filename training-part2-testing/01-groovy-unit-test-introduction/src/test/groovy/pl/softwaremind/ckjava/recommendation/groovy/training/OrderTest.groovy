@@ -23,11 +23,11 @@ class OrderTest {
     void 'shall not allow to add items to already closed order'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem())
+                .addItem(new OrderItemBuilder())
                 .close()
 
         // when
-        order.addItem(orderItem())
+        order.addItem(new OrderItemBuilder())
 
         // then
         // exception expected
@@ -37,7 +37,7 @@ class OrderTest {
     void 'shall cLose on already closed order have no effect'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem())
+                .addItem(new OrderItemBuilder())
                 .close()
 
         // when
@@ -50,13 +50,12 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        def item = orderItem() as OrderItem
+        def item = new OrderItemBuilder() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
-        order.addItem(orderItem()
-                .withCode(item.code))
+        order.addItem(new OrderItemBuilder(code: item.code))
 
         // then
         // exception expected
@@ -65,7 +64,7 @@ class OrderTest {
     @Test
     void 'shall find added item by it\'s code'() {
         // given
-        def item = orderItem() as OrderItem
+        def item = new OrderItemBuilder() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -77,7 +76,7 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        def item = orderItem() as OrderItem
+        def item = new OrderItemBuilder() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -92,7 +91,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         // when
-        order.items.add(orderItem() as OrderItem)
+        order.items.add(new OrderItemBuilder() as OrderItem)
 
         // then
         // exception expected
@@ -105,13 +104,13 @@ class OrderTest {
 
         def itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem() as OrderItem
+            def item = new OrderItemBuilder() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }
         // when
         // then
-        assert order.items as List<OrderItem> == itemsAdded
+        assert order.items as List == itemsAdded
     }
 
     @Test
@@ -121,7 +120,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem() as OrderItem
+            def item = new OrderItemBuilder() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }
@@ -138,7 +137,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem() as OrderItem
+            def item = new OrderItemBuilder() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }
