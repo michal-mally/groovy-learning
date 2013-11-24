@@ -57,10 +57,8 @@ class OrderItemTest {
         def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
         // when
-        def actualNetTotal = item.getNetTotal()
-
         // then
-        assert actualNetTotal == expectedNetTotal
+        assert item.getNetTotal() == expectedNetTotal
     }
 
     @DataProvider
@@ -81,10 +79,8 @@ class OrderItemTest {
         def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
         // when
-        def actualGrossTotal = item.getGrossTotal()
-
         // then
-        assert actualGrossTotal == expectedGrossTotal
+        assert item.getGrossTotal() == expectedGrossTotal
     }
 
 }
