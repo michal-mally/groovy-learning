@@ -55,7 +55,7 @@ class OrderTest {
 
         // when
         order.addItem(orderItem()
-                .withCode(item.getCode())
+                .withCode(item.code)
                 .build())
 
         // then
@@ -71,7 +71,7 @@ class OrderTest {
 
         // when
         // then
-        assert order.getItemByCode(item.getCode())?.is(item)
+        assert order.getItemByCode(item.code)?.is(item)
     }
 
     @Test
@@ -83,7 +83,7 @@ class OrderTest {
 
         // when
         // then
-        assert order.getItemByCode('other item code than ' + item.getCode()) == null
+        assert order.getItemByCode('other item code than ' + item.code) == null
     }
 
     @Test(expectedExceptions = UnsupportedOperationException)
@@ -92,7 +92,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         // when
-        order.getItems().add(orderItem().build())
+        order.items.add(orderItem().build())
 
         // then
         // exception expected
@@ -111,7 +111,7 @@ class OrderTest {
         }
         // when
         // then
-        assert order.getItems() as List<OrderItem> == itemsAdded
+        assert order.items as List<OrderItem> == itemsAdded
     }
 
     @Test
@@ -128,7 +128,7 @@ class OrderTest {
 
         // when
         // then
-        assert order.getNetTotal() == itemsAdded*.getNetTotal().sum()
+        assert order.netTotal == itemsAdded*.netTotal.sum()
     }
 
     @Test
@@ -145,7 +145,7 @@ class OrderTest {
 
         // when
         // then
-        assert order.getGrossTotal() == itemsAdded*.getGrossTotal().sum()
+        assert order.grossTotal == itemsAdded*.grossTotal.sum()
     }
 
 }

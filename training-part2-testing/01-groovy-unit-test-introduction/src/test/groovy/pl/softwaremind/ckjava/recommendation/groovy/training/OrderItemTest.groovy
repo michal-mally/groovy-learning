@@ -58,7 +58,7 @@ class OrderItemTest {
 
         // when
         // then
-        assert item.getNetTotal() == expectedNetTotal
+        assert item.netTotal == expectedNetTotal
     }
 
     @DataProvider
@@ -80,7 +80,7 @@ class OrderItemTest {
 
         // when
         // then
-        assert item.getGrossTotal() == expectedGrossTotal
+        assert item.grossTotal == expectedGrossTotal
     }
 
 }
