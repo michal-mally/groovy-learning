@@ -103,15 +103,12 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = random().nextInt(1, 15)
-
-        def itemsAdded = new ArrayList<>()
-        for (int i = 0; i < itemCount; i++) {
-            final OrderItem item = orderItem().build()
+        def itemsAdded = []
+        random().nextInt(1, 15).times {
+            def item = orderItem().build()
             order.addItem(item)
-            itemsAdded.add(item)
+            itemsAdded << item
         }
-
         // when
         // then
         assert order.getItems() as List<OrderItem> == itemsAdded
@@ -122,19 +119,16 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = random().nextInt(1, 15)
-
-        def expectedNetTotal = 0.00
-        for (int i = 0; i < itemCount; i++) {
-            final OrderItem item = orderItem().build()
+        List<OrderItem> itemsAdded = []
+        random().nextInt(1, 15).times {
+            def item = orderItem().build()
             order.addItem(item)
-
-            expectedNetTotal = expectedNetTotal.add(item.getNetTotal())
+            itemsAdded << item
         }
 
         // when
         // then
-        assert order.getNetTotal() == expectedNetTotal
+        assert order.getNetTotal() == itemsAdded*.getNetTotal().sum()
     }
 
     @Test
@@ -142,19 +136,16 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = random().nextInt(1, 15)
-
-        def expectedGrossTotal = 0.00
-        for (int i = 0; i < itemCount; i++) {
-            final OrderItem item = orderItem().build()
+        List<OrderItem> itemsAdded = []
+        random().nextInt(1, 15).times {
+            def item = orderItem().build()
             order.addItem(item)
-
-            expectedGrossTotal = expectedGrossTotal.add(item.getGrossTotal())
+            itemsAdded << item
         }
 
         // when
         // then
-        assert order.getGrossTotal() == expectedGrossTotal
+        assert order.getGrossTotal() == itemsAdded*.getGrossTotal().sum()
     }
 
 }
