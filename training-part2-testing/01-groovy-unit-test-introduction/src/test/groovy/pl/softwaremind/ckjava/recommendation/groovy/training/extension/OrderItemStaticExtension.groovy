@@ -1,10 +1,11 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training
+package pl.softwaremind.ckjava.recommendation.groovy.training.extension
+import pl.softwaremind.ckjava.recommendation.groovy.training.OrderItem
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 
-class OrderItemBuilder {
+class OrderItemStaticExtension {
 
-    static OrderItem orderItem(Map params = [:]) {
+    static OrderItem with(OrderItem selfType, Map params) {
         new OrderItem(
                 params.code             ?: randomAlphanumeric(10),
                 params.name             ?: randomAlphanumeric(20),
@@ -12,6 +13,10 @@ class OrderItemBuilder {
                 params.netPricePerPiece ?: BigDecimal.randomBetween(0.00, 100.00),
                 params.vatRate          ?: BigDecimal.randomBetween(0.00, 1.00)
         )
+    }
+
+    static OrderItem withDefault(OrderItem selfType) {
+        OrderItem.with([:])
     }
 
 }

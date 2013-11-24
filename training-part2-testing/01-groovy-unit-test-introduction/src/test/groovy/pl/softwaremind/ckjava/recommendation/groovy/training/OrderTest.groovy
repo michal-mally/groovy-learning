@@ -3,7 +3,6 @@ package pl.softwaremind.ckjava.recommendation.groovy.training
 import org.testng.annotations.Test
 
 import static java.util.concurrent.ThreadLocalRandom.current as random
-import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
 class OrderTest {
 
@@ -23,11 +22,11 @@ class OrderTest {
     void 'shall not allow to add items to already closed order'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem())
+                .addItem(OrderItem.withDefault())
                 .close()
 
         // when
-        order.addItem(orderItem())
+        order.addItem(OrderItem.withDefault())
 
         // then
         // exception expected
@@ -37,7 +36,7 @@ class OrderTest {
     void 'shall cLose on already closed order have no effect'() {
         // given
         def order = new Order('order number 1234')
-                .addItem(orderItem())
+                .addItem(OrderItem.withDefault())
                 .close()
 
         // when
@@ -50,12 +49,12 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        def item = orderItem()
+        def item = OrderItem.withDefault()
         def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
-        order.addItem(orderItem(code: item.code))
+        order.addItem(OrderItem.with(code: item.code))
 
         // then
         // exception expected
@@ -64,7 +63,7 @@ class OrderTest {
     @Test
     void 'shall find added item by it\'s code'() {
         // given
-        def item = orderItem()
+        def item = OrderItem.withDefault()
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -76,7 +75,7 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        def item = orderItem()
+        def item = OrderItem.withDefault()
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -91,7 +90,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         // when
-        order.items.add(orderItem())
+        order.items.add(OrderItem.withDefault())
 
         // then
         // exception expected
@@ -104,7 +103,7 @@ class OrderTest {
 
         def itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem()
+            def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
         }
@@ -120,7 +119,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem()
+            def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
         }
@@ -137,7 +136,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem()
+            def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
         }
