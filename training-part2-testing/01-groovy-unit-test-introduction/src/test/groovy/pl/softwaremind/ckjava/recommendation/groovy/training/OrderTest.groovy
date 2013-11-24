@@ -44,7 +44,7 @@ class OrderTest {
         order.close()
 
         // then
-        assert order.isClosed()
+        assert order.closed
     }
 
     @Test(expectedExceptions = OrderException)
