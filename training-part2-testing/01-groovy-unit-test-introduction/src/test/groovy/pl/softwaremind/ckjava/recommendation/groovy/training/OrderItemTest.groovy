@@ -8,7 +8,7 @@ public class OrderItemTest {
 
     @DataProvider
     public Object[][] invalidParams() {
-        return [
+        [
                 // invalid code
                 [ null, "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") ],
                 [ "", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") ],
@@ -43,7 +43,7 @@ public class OrderItemTest {
 
     @DataProvider
     public Object[][] netTotals() {
-        return [
+        [
             [ new BigDecimal("2.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("6.00") ],
             [ new BigDecimal("3.00"), new BigDecimal("2.00"), new BigDecimal("0.23"), new BigDecimal("6.00") ],
             [ new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("0.00") ],
@@ -67,7 +67,7 @@ public class OrderItemTest {
 
     @DataProvider
     public Object[][] grossTotals() {
-        return [
+        [
                 [ new BigDecimal("2.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("7.38") ],
                 [ new BigDecimal("3.00"), new BigDecimal("2.00"), new BigDecimal("0.23"), new BigDecimal("7.38") ],
                 [ new BigDecimal("0.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("0.00") ],

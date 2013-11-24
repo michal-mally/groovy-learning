@@ -17,40 +17,40 @@ public class OrderItemBuilder {
     private BigDecimal vatRate = randomBigDecimal(1_00, 2)
 
     public static OrderItemBuilder orderItem() {
-        return new OrderItemBuilder()
+        new OrderItemBuilder()
     }
 
     public OrderItemBuilder withCode(String code) {
         this.code = code
-        return this
+        this
     }
 
     public OrderItemBuilder withName(String name) {
         this.name = name
-        return this
+        this
     }
 
     public OrderItemBuilder withQuantity(BigDecimal quantity) {
         this.quantity = quantity
-        return this
+        this
     }
 
     public OrderItemBuilder withNetPricePerPiece(BigDecimal netPricePerPiece) {
         this.netPricePerPiece = netPricePerPiece
-        return this
+        this
     }
 
     public OrderItemBuilder withVatRate(BigDecimal vatRate) {
         this.vatRate = vatRate
-        return this
+        this
     }
 
     private static BigDecimal randomBigDecimal(long limit, int scale) {
-        return BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale)
+        BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale)
     }
 
     public OrderItem build() {
-        return new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
+        new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
     }
 
     private OrderItemBuilder() {
