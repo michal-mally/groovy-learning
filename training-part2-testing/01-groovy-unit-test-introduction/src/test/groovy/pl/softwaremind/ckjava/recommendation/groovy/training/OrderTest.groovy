@@ -9,7 +9,7 @@ import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBui
 class OrderTest {
 
     @Test(expectedExceptions = OrderException.class)
-    void shallNotAllowToCloseEmptyOrder() {
+    void 'shall not allow to close empty order'() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -21,7 +21,7 @@ class OrderTest {
     }
 
     @Test(expectedExceptions = OrderException.class)
-    void shallNotAllowToAddItemsToAlreadyClosedOrder() {
+    void 'shall not allow to add items to already closed order'() {
         // given
         final Order order = new Order("order number 1234")
                 .addItem(orderItem().build())
@@ -35,7 +35,7 @@ class OrderTest {
     }
 
     @Test
-    void shallCLoseOnAlreadyClosedOrderHaveNoEffect() {
+    void 'shall cLose on already closed order have no effect'() {
         // given
         final Order order = new Order("order number 1234")
                 .addItem(orderItem().build())
@@ -49,7 +49,7 @@ class OrderTest {
     }
 
     @Test(expectedExceptions = OrderException.class)
-    void shallNotAllowToAddItemWithTheSameCodeTwice() {
+    void 'shall not allow to add item with the same code twice'() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -65,7 +65,7 @@ class OrderTest {
     }
 
     @Test
-    void shallFindAddedItemByItsCode() {
+    void 'shall find added item by it\'s code'() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -79,7 +79,7 @@ class OrderTest {
     }
 
     @Test
-    void shallReturnNullIfItemIsNotFoundByCode() {
+    void 'shall return null if item is not found by code'() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -93,7 +93,7 @@ class OrderTest {
     }
 
     @Test(expectedExceptions = UnsupportedOperationException.class)
-    void shallNotAllowToAddItemsToCollectionObtainedByGetItems() {
+    void 'shall not allow to add items to collection obtained by getItems()'() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -105,7 +105,7 @@ class OrderTest {
     }
 
     @Test
-    void shallReturnAllTheItemsAddedWhenGetItemsUsedInTheSameOrderAsAdded() {
+    void 'shall return all the items added when getItems() called in the same order as added'() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -126,7 +126,7 @@ class OrderTest {
     }
 
     @Test
-    void shallReturnCorrectNetTotal() {
+    void 'shall return correct net total'() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -148,7 +148,7 @@ class OrderTest {
     }
 
     @Test
-    void shallReturnCorrectGrossTotal() {
+    void 'shall return correct gross total'() {
         // given
         final Order order = new Order("order number 1234")
 

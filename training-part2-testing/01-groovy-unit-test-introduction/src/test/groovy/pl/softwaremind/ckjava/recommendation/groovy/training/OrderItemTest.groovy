@@ -7,7 +7,7 @@ import static org.testng.Assert.assertEquals
 class OrderItemTest {
 
     @DataProvider
-    Object[][] invalidParams() {
+    Object[][] 'invalid params'() {
         [
                 // invalid code
                 [ null, "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") ],
@@ -32,8 +32,8 @@ class OrderItemTest {
         ]
     }
 
-    @Test(dataProvider = "invalidParams", expectedExceptions = OrderException.class)
-    void shallNotAllowToCreateOrderItemWithInvalidParameters(String code, String name, BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
+    @Test(dataProvider = "invalid params", expectedExceptions = OrderException.class)
+    void 'shall not allow to create OrderItem with invalid parameters'(String code, String name, BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
         // when
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
 
@@ -42,7 +42,7 @@ class OrderItemTest {
     }
 
     @DataProvider
-    Object[][] netTotals() {
+    Object[][] 'net totals'() {
         [
             [ new BigDecimal("2.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("6.00") ],
             [ new BigDecimal("3.00"), new BigDecimal("2.00"), new BigDecimal("0.23"), new BigDecimal("6.00") ],
@@ -53,8 +53,8 @@ class OrderItemTest {
         ]
     }
 
-    @Test(dataProvider = "netTotals")
-    void shallCalculateNetTotalCorrectly(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedNetTotal) {
+    @Test(dataProvider = "net totals")
+    void 'shall calculate net total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedNetTotal) {
         // given
         final OrderItem item = new OrderItem("code", "name", quantity, netPricePerPiece, vatRate)
 
@@ -66,7 +66,7 @@ class OrderItemTest {
     }
 
     @DataProvider
-    Object[][] grossTotals() {
+    Object[][] 'gross totals'() {
         [
                 [ new BigDecimal("2.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("7.38") ],
                 [ new BigDecimal("3.00"), new BigDecimal("2.00"), new BigDecimal("0.23"), new BigDecimal("7.38") ],
@@ -77,8 +77,8 @@ class OrderItemTest {
         ]
     }
 
-    @Test(dataProvider = "grossTotals")
-    void shallCalculateGrossTotalCorrectly(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedGrossTotal) {
+    @Test(dataProvider = "gross totals")
+    void 'shall calculate gross total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedGrossTotal) {
         // given
         final OrderItem item = new OrderItem("code", "name", quantity, netPricePerPiece, vatRate)
 
