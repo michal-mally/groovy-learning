@@ -31,7 +31,7 @@ class OrderItemTest {
     }
 
     @Test(dataProvider = 'invalid params', expectedExceptions = OrderException)
-    void 'shall not allow to create OrderItem with invalid parameters'(String code, String name, BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
+    void 'shall not allow to create OrderItem with invalid parameters'(code, name, quantity, netPricePerPiece, vatRate) {
         // when
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
 
@@ -52,7 +52,7 @@ class OrderItemTest {
     }
 
     @Test(dataProvider = 'net totals')
-    void 'shall calculate net total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedNetTotal) {
+    void 'shall calculate net total correctly'(quantity, netPricePerPiece, vatRate, expectedNetTotal) {
         // given
         def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
@@ -74,7 +74,7 @@ class OrderItemTest {
     }
 
     @Test(dataProvider = 'gross totals')
-    void 'shall calculate gross total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedGrossTotal) {
+    void 'shall calculate gross total correctly'(quantity, netPricePerPiece, vatRate, expectedGrossTotal) {
         // given
         def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
