@@ -1,9 +1,8 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training;
+package pl.softwaremind.ckjava.recommendation.groovy.training
 
-import java.math.BigDecimal;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.ThreadLocalRandom
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 
 public class OrderItemBuilder {
 
