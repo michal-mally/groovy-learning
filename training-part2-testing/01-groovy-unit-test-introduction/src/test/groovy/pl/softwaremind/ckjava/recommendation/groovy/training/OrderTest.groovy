@@ -2,8 +2,6 @@ package pl.softwaremind.ckjava.recommendation.groovy.training
 
 import org.testng.annotations.Test
 
-import static java.util.concurrent.ThreadLocalRandom.current as random
-
 class OrderTest {
 
     @Test(expectedExceptions = OrderException)
@@ -102,7 +100,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         def itemsAdded = []
-        random().nextInt(1, 15).times {
+        Integer.randomBetween(1, 15).times {
             def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
@@ -118,7 +116,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         List<OrderItem> itemsAdded = []
-        random().nextInt(1, 15).times {
+        Integer.randomBetween(1, 15).times {
             def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
@@ -135,7 +133,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         List<OrderItem> itemsAdded = []
-        random().nextInt(1, 15).times {
+        Integer.randomBetween(1, 15).times {
             def item = OrderItem.withDefault()
             order.addItem(item)
             itemsAdded << item
