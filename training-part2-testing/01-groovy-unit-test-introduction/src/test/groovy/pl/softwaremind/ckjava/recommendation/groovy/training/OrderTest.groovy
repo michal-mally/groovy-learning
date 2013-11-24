@@ -50,7 +50,7 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        def item = orderItem().build()
+        def item = orderItem() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -65,7 +65,7 @@ class OrderTest {
     @Test
     void 'shall find added item by it\'s code'() {
         // given
-        def item = orderItem().build()
+        def item = orderItem() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -77,7 +77,7 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        def item = orderItem().build()
+        def item = orderItem() as OrderItem
         def order = new Order('order number 1234')
                 .addItem(item)
 
@@ -92,7 +92,7 @@ class OrderTest {
         def order = new Order('order number 1234')
 
         // when
-        order.items.add(orderItem().build())
+        order.items.add(orderItem() as OrderItem)
 
         // then
         // exception expected
@@ -105,7 +105,7 @@ class OrderTest {
 
         def itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem().build()
+            def item = orderItem() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }
@@ -121,7 +121,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem().build()
+            def item = orderItem() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }
@@ -138,7 +138,7 @@ class OrderTest {
 
         List<OrderItem> itemsAdded = []
         random().nextInt(1, 15).times {
-            def item = orderItem().build()
+            def item = orderItem() as OrderItem
             order.addItem(item)
             itemsAdded << item
         }

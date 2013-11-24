@@ -15,6 +15,8 @@ class OrderItemBuilder {
 
     private BigDecimal vatRate = randomBigDecimal(1_00, 2)
 
+    private OrderItem builtInstance
+
     static OrderItemBuilder orderItem() {
         new OrderItemBuilder()
     }
@@ -46,7 +48,17 @@ class OrderItemBuilder {
 
 
     OrderItem build() {
-        new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
+        if (!builtInstance) {
+            builtInstance = new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
+        }
+
+        builtInstance
+    }
+
+    Object asType(Class type) {
+        if (type == OrderItem) {
+            return build()
+        }
     }
 
     private static BigDecimal randomBigDecimal(long limit, int scale) {
