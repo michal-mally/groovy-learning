@@ -24,7 +24,10 @@
         <groovy.version>2.1.8</groovy.version>
         <groovy.scope>test</groovy.scope>
 
-        <!-- tests -->
+        <!-- dependency versions -->
+        <commons-lang3.version>3.1</commons-lang3.version>
+
+        <!-- test dependency versions -->
         <testng.version>6.8.7</testng.version>
     </properties>
     <build>
@@ -61,6 +64,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>

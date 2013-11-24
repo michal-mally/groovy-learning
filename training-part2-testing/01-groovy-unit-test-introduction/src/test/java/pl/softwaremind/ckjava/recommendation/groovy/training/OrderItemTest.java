@@ -10,6 +10,41 @@ import static org.testng.Assert.assertEquals;
 public class OrderItemTest {
 
     @DataProvider
+    public Object[][] invalidParams() {
+        return new Object[][] {
+                // invalid code
+                { null, "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
+                { "", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
+
+                // invalid name
+                { "code", null, new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
+                { "code", "", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
+
+                // invlid quantity
+                { "code", "name", null, new BigDecimal("2.00"), new BigDecimal("0.23") },
+
+                // invalid price
+                { "code", "name", new BigDecimal("1.00"), null, new BigDecimal("0.23") },
+                { "code", "name", new BigDecimal("1.00"), new BigDecimal("-2.00"), new BigDecimal("0.23") },
+
+                // invalid vat rate
+                { "code", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), null },
+                { "code", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("-0.10") },
+                { "code", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("1.01") },
+                { "code", "name", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("23.00") },
+        };
+    }
+
+    @Test(dataProvider = "invalidParams", expectedExceptions = OrderException.class)
+    public void shallNotAllowToCreateOrderItemWithInvalidParameters(String code, String name, BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate) {
+        // when
+        new OrderItem(code, name, quantity, netPricePerPiece, vatRate);
+
+        // then
+        // exception expected
+    }
+
+    @DataProvider
     public Object[][] netTotals() {
         return new Object[][] {
             { new BigDecimal("2.00"), new BigDecimal("3.00"), new BigDecimal("0.23"), new BigDecimal("6.00") },

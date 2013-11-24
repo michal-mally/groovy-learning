@@ -14,7 +14,7 @@ public class Order {
 
     public Order addItem(OrderItem item) {
         if (isClosed()) {
-            throw new OrderAlreadyClosedException("Cannot add items to already closed Order!");
+            throw new OrderException("Cannot add items to already closed Order!");
         }
 
         this.items.add(item);
