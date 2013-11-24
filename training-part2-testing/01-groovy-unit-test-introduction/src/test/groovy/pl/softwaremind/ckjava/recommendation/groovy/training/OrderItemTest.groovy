@@ -62,7 +62,7 @@ class OrderItemTest {
         def actualNetTotal = item.getNetTotal()
 
         // then
-        assertEquals(actualNetTotal, expectedNetTotal, String.format('Expected net total of %s but got %s', expectedNetTotal, actualNetTotal))
+        assertEquals(actualNetTotal, expectedNetTotal, "Expected net total of $expectedNetTotal but got $actualNetTotal")
     }
 
     @DataProvider
@@ -86,7 +86,7 @@ class OrderItemTest {
         def actualGrossTotal = item.getGrossTotal()
 
         // then
-        assertEquals(actualGrossTotal, expectedGrossTotal, String.format('Expected gross total of %s but got %s', expectedGrossTotal, actualGrossTotal))
+        assertEquals(actualGrossTotal, expectedGrossTotal, "Expected gross total of $expectedGrossTotal but got $actualGrossTotal")
     }
 
 }
