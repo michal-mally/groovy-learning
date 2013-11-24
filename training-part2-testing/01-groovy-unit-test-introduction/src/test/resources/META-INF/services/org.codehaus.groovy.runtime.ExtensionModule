@@ -1,3 +1,0 @@
-moduleName = OrderTestExtension
-moduleVersion = 1.0
-extensionClasses = pl.softwaremind.ckjava.recommendation.groovy.training.OrderCategory
