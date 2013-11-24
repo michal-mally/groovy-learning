@@ -55,4 +55,15 @@ public class OrderItem {
         return getNetTotal().multiply(BigDecimal.ONE.add(getVatRate())).setScale(2, HALF_UP);
     }
 
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", netPricePerPiece=" + netPricePerPiece +
+                ", vatRate=" + vatRate +
+                '}';
+    }
+
 }
