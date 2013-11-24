@@ -46,7 +46,7 @@ public class OrderItemBuilder {
         return this;
     }
 
-    public static BigDecimal randomBigDecimal(long limit, int scale) {
+    private static BigDecimal randomBigDecimal(long limit, int scale) {
         return BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale);
     }
 

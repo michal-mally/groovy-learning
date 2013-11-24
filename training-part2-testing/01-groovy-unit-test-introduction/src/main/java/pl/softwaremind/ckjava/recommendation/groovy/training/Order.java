@@ -17,6 +17,10 @@ public class Order {
         this.number = number;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
     public Order addItem(OrderItem item) {
         if (isClosed()) {
             throw new OrderException("Cannot add items to already closed Order!");

@@ -20,7 +20,7 @@ public class OrderItemTest {
                 { "code", null, new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
                 { "code", "", new BigDecimal("1.00"), new BigDecimal("2.00"), new BigDecimal("0.23") },
 
-                // invlid quantity
+                // invalid quantity
                 { "code", "name", null, new BigDecimal("2.00"), new BigDecimal("0.23") },
 
                 // invalid price

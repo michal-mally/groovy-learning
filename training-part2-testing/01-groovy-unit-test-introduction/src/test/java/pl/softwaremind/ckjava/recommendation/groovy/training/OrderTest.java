@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.testng.Assert.*;
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem;
 
@@ -173,10 +172,6 @@ public class OrderTest {
 
         // then
         assertEquals(grossTotal, expectedGrossTotal);
-    }
-
-    private String randomCode() {
-        return randomAlphanumeric(10);
     }
 
 }
