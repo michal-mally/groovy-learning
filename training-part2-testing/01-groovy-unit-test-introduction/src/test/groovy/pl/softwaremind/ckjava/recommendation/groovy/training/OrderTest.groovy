@@ -6,10 +6,10 @@ import java.util.concurrent.ThreadLocalRandom
 import static org.testng.Assert.*
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
-public class OrderTest {
+class OrderTest {
 
     @Test(expectedExceptions = OrderException.class)
-    public void shallNotAllowToCloseEmptyOrder() {
+    void shallNotAllowToCloseEmptyOrder() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -21,7 +21,7 @@ public class OrderTest {
     }
 
     @Test(expectedExceptions = OrderException.class)
-    public void shallNotAllowToAddItemsToAlreadyClosedOrder() {
+    void shallNotAllowToAddItemsToAlreadyClosedOrder() {
         // given
         final Order order = new Order("order number 1234")
                 .addItem(orderItem().build())
@@ -35,7 +35,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallCLoseOnAlreadyClosedOrderHaveNoEffect() {
+    void shallCLoseOnAlreadyClosedOrderHaveNoEffect() {
         // given
         final Order order = new Order("order number 1234")
                 .addItem(orderItem().build())
@@ -49,7 +49,7 @@ public class OrderTest {
     }
 
     @Test(expectedExceptions = OrderException.class)
-    public void shallNotAllowToAddItemWithTheSameCodeTwice() {
+    void shallNotAllowToAddItemWithTheSameCodeTwice() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -65,7 +65,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallFindAddedItemByItsCode() {
+    void shallFindAddedItemByItsCode() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -79,7 +79,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallReturnNullIfItemIsNotFoundByCode() {
+    void shallReturnNullIfItemIsNotFoundByCode() {
         // given
         final OrderItem item = orderItem().build()
         final Order order = new Order("order number 1234")
@@ -93,7 +93,7 @@ public class OrderTest {
     }
 
     @Test(expectedExceptions = UnsupportedOperationException.class)
-    public void shallNotAllowToAddItemsToCollectionObtainedByGetItems() {
+    void shallNotAllowToAddItemsToCollectionObtainedByGetItems() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -105,7 +105,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallReturnAllTheItemsAddedWhenGetItemsUsedInTheSameOrderAsAdded() {
+    void shallReturnAllTheItemsAddedWhenGetItemsUsedInTheSameOrderAsAdded() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -126,7 +126,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallReturnCorrectNetTotal() {
+    void shallReturnCorrectNetTotal() {
         // given
         final Order order = new Order("order number 1234")
 
@@ -148,7 +148,7 @@ public class OrderTest {
     }
 
     @Test
-    public void shallReturnCorrectGrossTotal() {
+    void shallReturnCorrectGrossTotal() {
         // given
         final Order order = new Order("order number 1234")
 

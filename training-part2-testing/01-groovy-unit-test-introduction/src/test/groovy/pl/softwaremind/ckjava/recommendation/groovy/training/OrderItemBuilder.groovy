@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 
-public class OrderItemBuilder {
+class OrderItemBuilder {
 
     private String code = randomAlphanumeric(10)
 
@@ -16,41 +16,42 @@ public class OrderItemBuilder {
 
     private BigDecimal vatRate = randomBigDecimal(1_00, 2)
 
-    public static OrderItemBuilder orderItem() {
+    static OrderItemBuilder orderItem() {
         new OrderItemBuilder()
     }
 
-    public OrderItemBuilder withCode(String code) {
+    OrderItemBuilder withCode(String code) {
         this.code = code
         this
     }
 
-    public OrderItemBuilder withName(String name) {
+    OrderItemBuilder withName(String name) {
         this.name = name
         this
     }
 
-    public OrderItemBuilder withQuantity(BigDecimal quantity) {
+    OrderItemBuilder withQuantity(BigDecimal quantity) {
         this.quantity = quantity
         this
     }
 
-    public OrderItemBuilder withNetPricePerPiece(BigDecimal netPricePerPiece) {
+    OrderItemBuilder withNetPricePerPiece(BigDecimal netPricePerPiece) {
         this.netPricePerPiece = netPricePerPiece
         this
     }
 
-    public OrderItemBuilder withVatRate(BigDecimal vatRate) {
+    OrderItemBuilder withVatRate(BigDecimal vatRate) {
         this.vatRate = vatRate
         this
     }
 
-    private static BigDecimal randomBigDecimal(long limit, int scale) {
-        BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale)
+
+    OrderItem build() {
+        new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
     }
 
-    public OrderItem build() {
-        new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
+    private static BigDecimal randomBigDecimal(long limit, int scale) {
+        BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale)
     }
 
     private OrderItemBuilder() {
