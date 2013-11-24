@@ -2,6 +2,7 @@ package pl.softwaremind.ckjava.recommendation.groovy.training
 
 import static java.util.concurrent.ThreadLocalRandom.current as random
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
+import static org.apache.commons.lang3.text.WordUtils.uncapitalize
 
 class OrderItemBuilder {
 
@@ -21,31 +22,18 @@ class OrderItemBuilder {
         new OrderItemBuilder()
     }
 
-    OrderItemBuilder withCode(String code) {
-        this.code = code
+    def methodMissing(String name, args) {
+        if (!name.startsWith('with')) {
+            throw new MissingMethodException(name, this.class, args)
+        }
+
+        if (args.size() != 1) {
+            throw new MissingMethodException(name, this.class, args)
+        }
+
+        setProperty(uncapitalize(name[4..-1]), args[0])
         this
     }
-
-    OrderItemBuilder withName(String name) {
-        this.name = name
-        this
-    }
-
-    OrderItemBuilder withQuantity(BigDecimal quantity) {
-        this.quantity = quantity
-        this
-    }
-
-    OrderItemBuilder withNetPricePerPiece(BigDecimal netPricePerPiece) {
-        this.netPricePerPiece = netPricePerPiece
-        this
-    }
-
-    OrderItemBuilder withVatRate(BigDecimal vatRate) {
-        this.vatRate = vatRate
-        this
-    }
-
 
     OrderItem build() {
         if (!builtInstance) {
