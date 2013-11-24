@@ -2,8 +2,6 @@ package pl.softwaremind.ckjava.recommendation.groovy.training
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
-import static org.testng.Assert.assertEquals
-
 class OrderItemTest {
 
     @DataProvider
@@ -62,7 +60,7 @@ class OrderItemTest {
         def actualNetTotal = item.getNetTotal()
 
         // then
-        assertEquals(actualNetTotal, expectedNetTotal, "Expected net total of $expectedNetTotal but got $actualNetTotal")
+        assert actualNetTotal == expectedNetTotal
     }
 
     @DataProvider
@@ -86,7 +84,7 @@ class OrderItemTest {
         def actualGrossTotal = item.getGrossTotal()
 
         // then
-        assertEquals(actualGrossTotal, expectedGrossTotal, "Expected gross total of $expectedGrossTotal but got $actualGrossTotal")
+        assert actualGrossTotal == expectedGrossTotal
     }
 
 }

@@ -3,7 +3,6 @@ import org.testng.annotations.Test
 
 import java.util.concurrent.ThreadLocalRandom
 
-import static org.testng.Assert.*
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
 class OrderTest {
@@ -45,7 +44,7 @@ class OrderTest {
         order.close()
 
         // then
-        assertTrue(order.isClosed(), 'Order shall be closed but is not!')
+        assert order.isClosed()
     }
 
     @Test(expectedExceptions = OrderException)
@@ -75,7 +74,7 @@ class OrderTest {
         def itemByCode = order.getItemByCode(item.getCode())
 
         // then
-        assertSame(itemByCode, item, 'OrderItem returned by getItemByCode() shall return the same instance as was added!')
+        assert itemByCode != null && itemByCode.is(item)
     }
 
     @Test
@@ -89,7 +88,7 @@ class OrderTest {
         def itemByCode = order.getItemByCode('other item code than ' + item.getCode())
 
         // then
-        assertNull(itemByCode, 'OrderItem returned by getItemByCode() shall be null!')
+        assert itemByCode == null
     }
 
     @Test(expectedExceptions = UnsupportedOperationException)
@@ -119,10 +118,10 @@ class OrderTest {
         }
 
         // when
-        def items = order.getItems()
+        def getItems = order.getItems() as List<OrderItem>
 
         // then
-        assertEquals(items, itemsAdded, 'Items returned by Order.getItems() do not match the items added!')
+        assert getItems == itemsAdded
     }
 
     @Test
@@ -144,7 +143,7 @@ class OrderTest {
         def netTotal = order.getNetTotal()
 
         // then
-        assertEquals(netTotal, expectedNetTotal)
+        assert netTotal == expectedNetTotal
     }
 
     @Test
@@ -166,7 +165,7 @@ class OrderTest {
         def grossTotal = order.getGrossTotal()
 
         // then
-        assertEquals(grossTotal, expectedGrossTotal)
+        assert grossTotal == expectedGrossTotal
     }
 
 }
