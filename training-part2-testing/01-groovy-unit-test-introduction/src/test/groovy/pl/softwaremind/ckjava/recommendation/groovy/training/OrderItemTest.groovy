@@ -10,25 +10,25 @@ class OrderItemTest {
     Object[][] 'invalid params'() {
         [
                 // invalid code
-                [ null, 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('0.23') ],
-                [ '', 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('0.23') ],
+                [ null, 'name', 1.00, 2.00, 0.23 ],
+                [ '', 'name', 1.00, 2.00, 0.23 ],
 
                 // invalid name
-                [ 'code', null, new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('0.23') ],
-                [ 'code', '', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('0.23') ],
+                [ 'code', null, 1.00, 2.00, 0.23 ],
+                [ 'code', '', 1.00, 2.00, 0.23 ],
 
                 // invalid quantity
-                [ 'code', 'name', null, new BigDecimal('2.00'), new BigDecimal('0.23') ],
+                [ 'code', 'name', null, 2.00, 0.23 ],
 
                 // invalid price
-                [ 'code', 'name', new BigDecimal('1.00'), null, new BigDecimal('0.23') ],
-                [ 'code', 'name', new BigDecimal('1.00'), new BigDecimal('-2.00'), new BigDecimal('0.23') ],
+                [ 'code', 'name', 1.00, null, 0.23 ],
+                [ 'code', 'name', 1.00, -2.00, 0.23 ],
 
                 // invalid vat rate
-                [ 'code', 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), null ],
-                [ 'code', 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('-0.10') ],
-                [ 'code', 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('1.01') ],
-                [ 'code', 'name', new BigDecimal('1.00'), new BigDecimal('2.00'), new BigDecimal('23.00') ],
+                [ 'code', 'name', 1.00, 2.00, null ],
+                [ 'code', 'name', 1.00, 2.00, -0.10 ],
+                [ 'code', 'name', 1.00, 2.00, 1.01 ],
+                [ 'code', 'name', 1.00, 2.00, 23.00 ],
         ]
     }
 
@@ -44,12 +44,12 @@ class OrderItemTest {
     @DataProvider
     Object[][] 'net totals'() {
         [
-            [ new BigDecimal('2.00'), new BigDecimal('3.00'), new BigDecimal('0.23'), new BigDecimal('6.00') ],
-            [ new BigDecimal('3.00'), new BigDecimal('2.00'), new BigDecimal('0.23'), new BigDecimal('6.00') ],
-            [ new BigDecimal('0.00'), new BigDecimal('3.00'), new BigDecimal('0.23'), new BigDecimal('0.00') ],
-            [ new BigDecimal('2.10'), new BigDecimal('3.50'), new BigDecimal('0.00'), new BigDecimal('7.35') ],
-            [ new BigDecimal('0.10'), new BigDecimal('0.05'), new BigDecimal('0.00'), new BigDecimal('0.01') ],
-            [ new BigDecimal('0.10'), new BigDecimal('0.04'), new BigDecimal('0.00'), new BigDecimal('0.00') ],
+            [ 2.00, 3.00, 0.23, 6.00 ],
+            [ 3.00, 2.00, 0.23, 6.00 ],
+            [ 0.00, 3.00, 0.23, 0.00 ],
+            [ 2.10, 3.50, 0.00, 7.35 ],
+            [ 0.10, 0.05, 0.00, 0.01 ],
+            [ 0.10, 0.04, 0.00, 0.00 ],
         ]
     }
 
@@ -68,12 +68,12 @@ class OrderItemTest {
     @DataProvider
     Object[][] 'gross totals'() {
         [
-                [ new BigDecimal('2.00'), new BigDecimal('3.00'), new BigDecimal('0.23'), new BigDecimal('7.38') ],
-                [ new BigDecimal('3.00'), new BigDecimal('2.00'), new BigDecimal('0.23'), new BigDecimal('7.38') ],
-                [ new BigDecimal('0.00'), new BigDecimal('3.00'), new BigDecimal('0.23'), new BigDecimal('0.00') ],
-                [ new BigDecimal('2.10'), new BigDecimal('3.50'), new BigDecimal('0.07'), new BigDecimal('7.86') ],
-                [ new BigDecimal('0.10'), new BigDecimal('0.05'), new BigDecimal('0.07'), new BigDecimal('0.01') ],
-                [ new BigDecimal('0.10'), new BigDecimal('0.04'), new BigDecimal('0.07'), new BigDecimal('0.00') ],
+                [ 2.00, 3.00, 0.23, 7.38 ],
+                [ 3.00, 2.00, 0.23, 7.38 ],
+                [ 0.00, 3.00, 0.23, 0.00 ],
+                [ 2.10, 3.50, 0.07, 7.86 ],
+                [ 0.10, 0.05, 0.07, 0.01 ],
+                [ 0.10, 0.04, 0.07, 0.00 ],
         ]
     }
 
