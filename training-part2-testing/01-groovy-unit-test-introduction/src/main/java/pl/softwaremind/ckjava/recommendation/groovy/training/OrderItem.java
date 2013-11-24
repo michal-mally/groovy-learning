@@ -2,6 +2,8 @@ package pl.softwaremind.ckjava.recommendation.groovy.training;
 
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.HALF_UP;
+
 public class OrderItem {
 
     private final String code;
@@ -43,11 +45,11 @@ public class OrderItem {
     }
 
     public BigDecimal getNetTotal() {
-        return getNetPricePerPiece().multiply(getQuantity());
+        return getNetPricePerPiece().multiply(getQuantity()).setScale(2, HALF_UP);
     }
 
     public BigDecimal getGrossTotal() {
-        return getNetTotal().multiply(BigDecimal.ONE.add(getVatRate()));
+        return getNetTotal().multiply(BigDecimal.ONE.add(getVatRate())).setScale(2, HALF_UP);
     }
 
 }
