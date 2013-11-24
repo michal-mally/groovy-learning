@@ -1,0 +1,3 @@
+moduleName = OrderTestExtension
+moduleVersion = 1.0
+staticExtensionClasses = pl.softwaremind.ckjava.recommendation.groovy.training.extension.BigDecimalStaticExtension
