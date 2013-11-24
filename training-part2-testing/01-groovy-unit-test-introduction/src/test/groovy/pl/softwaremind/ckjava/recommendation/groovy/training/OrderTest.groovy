@@ -11,7 +11,7 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to close empty order'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
 
         // when
         order.close()
@@ -23,7 +23,7 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add items to already closed order'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
                 .addItem(orderItem().build())
                 .close()
 
@@ -37,7 +37,7 @@ class OrderTest {
     @Test
     void 'shall cLose on already closed order have no effect'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
                 .addItem(orderItem().build())
                 .close()
 
@@ -51,8 +51,8 @@ class OrderTest {
     @Test(expectedExceptions = OrderException)
     void 'shall not allow to add item with the same code twice'() {
         // given
-        final OrderItem item = orderItem().build()
-        final Order order = new Order('order number 1234')
+        def item = orderItem().build()
+        def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
@@ -67,12 +67,12 @@ class OrderTest {
     @Test
     void 'shall find added item by it\'s code'() {
         // given
-        final OrderItem item = orderItem().build()
-        final Order order = new Order('order number 1234')
+        def item = orderItem().build()
+        def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
-        final OrderItem itemByCode = order.getItemByCode(item.getCode())
+        def itemByCode = order.getItemByCode(item.getCode())
 
         // then
         assertSame(itemByCode, item, 'OrderItem returned by getItemByCode() shall return the same instance as was added!')
@@ -81,12 +81,12 @@ class OrderTest {
     @Test
     void 'shall return null if item is not found by code'() {
         // given
-        final OrderItem item = orderItem().build()
-        final Order order = new Order('order number 1234')
+        def item = orderItem().build()
+        def order = new Order('order number 1234')
                 .addItem(item)
 
         // when
-        final OrderItem itemByCode = order.getItemByCode('other item code than ' + item.getCode())
+        def itemByCode = order.getItemByCode('other item code than ' + item.getCode())
 
         // then
         assertNull(itemByCode, 'OrderItem returned by getItemByCode() shall be null!')
@@ -95,7 +95,7 @@ class OrderTest {
     @Test(expectedExceptions = UnsupportedOperationException)
     void 'shall not allow to add items to collection obtained by getItems()'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
 
         // when
         order.getItems().add(orderItem().build())
@@ -107,11 +107,11 @@ class OrderTest {
     @Test
     void 'shall return all the items added when getItems() called in the same order as added'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
 
-        final int itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
 
-        final List<OrderItem> itemsAdded = new ArrayList<>()
+        def itemsAdded = new ArrayList<>()
         for (int i = 0; i < itemCount; i++) {
             final OrderItem item = orderItem().build()
             order.addItem(item)
@@ -119,7 +119,7 @@ class OrderTest {
         }
 
         // when
-        final Collection<OrderItem> items = order.getItems()
+        def items = order.getItems()
 
         // then
         assertEquals(items, itemsAdded, 'Items returned by Order.getItems() do not match the items added!')
@@ -128,11 +128,11 @@ class OrderTest {
     @Test
     void 'shall return correct net total'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
 
-        final int itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
 
-        BigDecimal expectedNetTotal = BigDecimal.ZERO
+        def expectedNetTotal = 0.00
         for (int i = 0; i < itemCount; i++) {
             final OrderItem item = orderItem().build()
             order.addItem(item)
@@ -141,7 +141,7 @@ class OrderTest {
         }
 
         // when
-        final BigDecimal netTotal = order.getNetTotal()
+        def netTotal = order.getNetTotal()
 
         // then
         assertEquals(netTotal, expectedNetTotal)
@@ -150,11 +150,11 @@ class OrderTest {
     @Test
     void 'shall return correct gross total'() {
         // given
-        final Order order = new Order('order number 1234')
+        def order = new Order('order number 1234')
 
-        final int itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
 
-        BigDecimal expectedGrossTotal = BigDecimal.ZERO
+        def expectedGrossTotal = 0.00
         for (int i = 0; i < itemCount; i++) {
             final OrderItem item = orderItem().build()
             order.addItem(item)
@@ -163,7 +163,7 @@ class OrderTest {
         }
 
         // when
-        final BigDecimal grossTotal = order.getGrossTotal()
+        def grossTotal = order.getGrossTotal()
 
         // then
         assertEquals(grossTotal, expectedGrossTotal)

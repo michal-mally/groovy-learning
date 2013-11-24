@@ -56,10 +56,10 @@ class OrderItemTest {
     @Test(dataProvider = 'net totals')
     void 'shall calculate net total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedNetTotal) {
         // given
-        final OrderItem item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
+        def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
         // when
-        final BigDecimal actualNetTotal = item.getNetTotal()
+        def actualNetTotal = item.getNetTotal()
 
         // then
         assertEquals(actualNetTotal, expectedNetTotal, String.format('Expected net total of %s but got %s', expectedNetTotal, actualNetTotal))
@@ -80,10 +80,10 @@ class OrderItemTest {
     @Test(dataProvider = 'gross totals')
     void 'shall calculate gross total correctly'(BigDecimal quantity, BigDecimal netPricePerPiece, BigDecimal vatRate, BigDecimal expectedGrossTotal) {
         // given
-        final OrderItem item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
+        def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
         // when
-        final BigDecimal actualGrossTotal = item.getGrossTotal()
+        def actualGrossTotal = item.getGrossTotal()
 
         // then
         assertEquals(actualGrossTotal, expectedGrossTotal, String.format('Expected gross total of %s but got %s', expectedGrossTotal, actualGrossTotal))
