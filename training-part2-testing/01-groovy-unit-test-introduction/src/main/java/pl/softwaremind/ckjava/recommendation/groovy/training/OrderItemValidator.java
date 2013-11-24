@@ -18,4 +18,8 @@ public class OrderItemValidator {
         }
     }
 
+    private OrderItemValidator() {
+        // intentionally left blank
+    }
+
 }

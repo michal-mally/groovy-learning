@@ -3,10 +3,12 @@ package pl.softwaremind.ckjava.recommendation.groovy.training;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.testng.Assert.*;
 
 public class OrderTest {
 
@@ -92,6 +94,37 @@ public class OrderTest {
 
         // then
         assertNull(itemByCode, "OrderItem returned by getItemByCode() shall be null!");
+    }
+
+    @Test(expectedExceptions = UnsupportedOperationException.class)
+    public void shallNotAllowToAddItemsToCollectionObtainedByGetItems() {
+        // given
+        final Order order = new Order("order number 1234");
+
+        // when
+        order.getItems().add(orderItem("item 1"));
+
+        // then
+        // exception expected
+    }
+
+    @Test
+    public void shallReturnAllTheItemsAddedWhenGetItemsUsedInTheSameOrderAsAdded() {
+        // given
+        final Order order = new Order("order number 1234");
+
+        final List<OrderItem> itemsAdded = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            final OrderItem item = orderItem(randomAlphanumeric(10));
+            order.addItem(item);
+            itemsAdded.add(item);
+        }
+
+        // when
+        final Collection<OrderItem> items = order.getItems();
+
+        // then
+        assertEquals(items, itemsAdded, "Items returned by Order.getItems() do not match the items added!");
     }
 
     private OrderItem orderItem(String code) {

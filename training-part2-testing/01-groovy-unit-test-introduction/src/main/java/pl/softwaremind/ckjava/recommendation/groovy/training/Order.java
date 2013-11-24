@@ -1,16 +1,15 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Order {
 
     private final String number;
 
-    private final List<OrderItem> items = new ArrayList<>();
+    private final Map<String, OrderItem> items = new LinkedHashMap<>();
 
     private boolean closed = false;
 
@@ -27,22 +26,16 @@ public class Order {
             throw new OrderException("Cannot add two items with the same code to the same Order!");
         }
 
-        this.items.add(item);
+        this.items.put(item.getCode(), item);
         return this;
     }
 
-    public List<OrderItem> getItems() {
-        return unmodifiableList(this.items);
+    public Collection<OrderItem> getItems() {
+        return this.items.values();
     }
 
     public OrderItem getItemByCode(String code) {
-        for (OrderItem item : this.items) {
-            if (item.getCode().equals(code)) {
-                return item;
-            }
-        }
-
-        return null;
+        return this.items.get(code);
     }
 
     public Order close() {
@@ -64,7 +57,7 @@ public class Order {
 
     public BigDecimal getNetTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        for (OrderItem item : this.items) {
+        for (OrderItem item : this.items.values()) {
             total = total.add(item.getNetTotal());
         }
 
@@ -73,7 +66,7 @@ public class Order {
 
     public BigDecimal getGrossTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        for (OrderItem item : this.items) {
+        for (OrderItem item : this.items.values()) {
             total = total.add(item.getGrossTotal());
         }
 
