@@ -1,7 +1,6 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
 
-import java.util.concurrent.ThreadLocalRandom
-
+import static java.util.concurrent.ThreadLocalRandom.current as random
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 
 class OrderItemBuilder {
@@ -51,7 +50,7 @@ class OrderItemBuilder {
     }
 
     private static BigDecimal randomBigDecimal(long limit, int scale) {
-        BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(limit), scale)
+        BigDecimal.valueOf(random().nextLong(limit), scale)
     }
 
     private OrderItemBuilder() {

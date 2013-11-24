@@ -1,8 +1,7 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
 import org.testng.annotations.Test
 
-import java.util.concurrent.ThreadLocalRandom
-
+import static java.util.concurrent.ThreadLocalRandom.current as random
 import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemBuilder.orderItem
 
 class OrderTest {
@@ -104,7 +103,7 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = random().nextInt(1, 15)
 
         def itemsAdded = new ArrayList<>()
         for (int i = 0; i < itemCount; i++) {
@@ -123,7 +122,7 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = random().nextInt(1, 15)
 
         def expectedNetTotal = 0.00
         for (int i = 0; i < itemCount; i++) {
@@ -143,7 +142,7 @@ class OrderTest {
         // given
         def order = new Order('order number 1234')
 
-        def itemCount = ThreadLocalRandom.current().nextInt(1, 15)
+        def itemCount = random().nextInt(1, 15)
 
         def expectedGrossTotal = 0.00
         for (int i = 0; i < itemCount; i++) {
