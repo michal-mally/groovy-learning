@@ -1,9 +1,11 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class OrderItemTest extends Specification {
 
+    @Unroll
     def 'shall not allow to create OrderItem with invalid parameters'() {
         when:
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
@@ -26,6 +28,7 @@ class OrderItemTest extends Specification {
         'code' | 'name' | 1.00     | 2.00             | 23.00
     }
 
+    @Unroll
     def 'shall calculate net total correctly'() {
         expect:
         new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).netTotal == netTotal
@@ -40,6 +43,7 @@ class OrderItemTest extends Specification {
         0.10     | 0.04             | 0.00    || 0.00
     }
 
+    @Unroll
     def 'shall calculate gross total correctly'() {
         expect:
         new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).grossTotal == grossTotal
