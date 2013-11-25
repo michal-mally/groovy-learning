@@ -1,86 +1,57 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training
-import org.testng.annotations.DataProvider
-import org.testng.annotations.Test
 
-class OrderItemTest {
+import spock.lang.Specification
 
-    @DataProvider
-    Object[][] 'invalid params'() {
-        [
-                // invalid code
-                [ null, 'name', 1.00, 2.00, 0.23 ],
-                [ '', 'name', 1.00, 2.00, 0.23 ],
+class OrderItemTest extends Specification {
 
-                // invalid name
-                [ 'code', null, 1.00, 2.00, 0.23 ],
-                [ 'code', '', 1.00, 2.00, 0.23 ],
-
-                // invalid quantity
-                [ 'code', 'name', null, 2.00, 0.23 ],
-
-                // invalid price
-                [ 'code', 'name', 1.00, null, 0.23 ],
-                [ 'code', 'name', 1.00, -2.00, 0.23 ],
-
-                // invalid vat rate
-                [ 'code', 'name', 1.00, 2.00, null ],
-                [ 'code', 'name', 1.00, 2.00, -0.10 ],
-                [ 'code', 'name', 1.00, 2.00, 1.01 ],
-                [ 'code', 'name', 1.00, 2.00, 23.00 ],
-        ]
-    }
-
-    @Test(dataProvider = 'invalid params', expectedExceptions = OrderException)
-    void 'shall not allow to create OrderItem with invalid parameters'(code, name, quantity, netPricePerPiece, vatRate) {
-        // when
+    def 'shall not allow to create OrderItem with invalid parameters'() {
+        when:
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
 
-        // then
-        // exception expected
+        then:
+        thrown(OrderException)
+
+        where:
+        code   | name   | quantity | netPricePerPiece | vatRate
+        null   | 'name' | 1.00     | 2.00             | 0.23
+        ''     | 'name' | 1.00     | 2.00             | 0.23
+        'code' | null   | 1.00     | 2.00             | 0.23
+        'code' | ''     | 1.00     | 2.00             | 0.23
+        'code' | 'name' | null     | 2.00             | 0.23
+        'code' | 'name' | 1.00     | null             | 0.23
+        'code' | 'name' | 1.00     | -2.00            | 0.23
+        'code' | 'name' | 1.00     | 2.00             | null
+        'code' | 'name' | 1.00     | 2.00             | -0.10
+        'code' | 'name' | 1.00     | 2.00             | 1.01
+        'code' | 'name' | 1.00     | 2.00             | 23.00
     }
 
-    @DataProvider
-    Object[][] 'net totals'() {
-        [
-            [ 2.00, 3.00, 0.23, 6.00 ],
-            [ 3.00, 2.00, 0.23, 6.00 ],
-            [ 0.00, 3.00, 0.23, 0.00 ],
-            [ 2.10, 3.50, 0.00, 7.35 ],
-            [ 0.10, 0.05, 0.00, 0.01 ],
-            [ 0.10, 0.04, 0.00, 0.00 ],
-        ]
+    def 'shall calculate net total correctly'() {
+        expect:
+        new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).netTotal == netTotal
+
+        where:
+        quantity | netPricePerPiece | vatRate || netTotal
+        2.00     | 3.00             | 0.23    || 6.00
+        3.00     | 2.00             | 0.23    || 6.00
+        0.00     | 3.00             | 0.23    || 0.00
+        2.10     | 3.50             | 0.00    || 7.35
+        0.10     | 0.05             | 0.00    || 0.01
+        0.10     | 0.04             | 0.00    || 0.00
     }
 
-    @Test(dataProvider = 'net totals')
-    void 'shall calculate net total correctly'(quantity, netPricePerPiece, vatRate, expectedNetTotal) {
-        // given
-        def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
+    def 'shall calculate gross total correctly'() {
+        expect:
+        new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).grossTotal == grossTotal
 
-        // when
-        // then
-        assert item.netTotal == expectedNetTotal
-    }
-
-    @DataProvider
-    Object[][] 'gross totals'() {
-        [
-                [ 2.00, 3.00, 0.23, 7.38 ],
-                [ 3.00, 2.00, 0.23, 7.38 ],
-                [ 0.00, 3.00, 0.23, 0.00 ],
-                [ 2.10, 3.50, 0.07, 7.86 ],
-                [ 0.10, 0.05, 0.07, 0.01 ],
-                [ 0.10, 0.04, 0.07, 0.00 ],
-        ]
-    }
-
-    @Test(dataProvider = 'gross totals')
-    void 'shall calculate gross total correctly'(quantity, netPricePerPiece, vatRate, expectedGrossTotal) {
-        // given
-        def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
-
-        // when
-        // then
-        assert item.grossTotal == expectedGrossTotal
+        where:
+        quantity | netPricePerPiece | vatRate || grossTotal
+        2.00     | 3.00             | 0.23    || 7.38
+        3.00     | 2.00             | 0.23    || 7.38
+        0.00     | 3.00             | 0.23    || 0.00
+        2.10     | 3.50             | 0.07    || 7.86
+        0.10     | 0.05             | 0.07    || 0.01
+        0.10     | 0.04             | 0.07    || 0.00
     }
 
 }
