@@ -6,7 +6,7 @@ import spock.lang.Unroll
 class OrderItemTest extends Specification {
 
     @Unroll
-    def 'shall not allow to create OrderItem with invalid parameters'() {
+    def 'shall not allow to create OrderItem with invalid parameters (#code, #name, #quantity, #netPricePerPiece, #vatRate)'() {
         when:
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
 
@@ -29,7 +29,7 @@ class OrderItemTest extends Specification {
     }
 
     @Unroll
-    def 'shall calculate net total correctly'() {
+    def 'shall net total = #netTotal when quantity = #quantity, net price per piece = #netPricePerPiece, vatRate = #vatRate'() {
         expect:
         new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).netTotal == netTotal
 
@@ -44,7 +44,7 @@ class OrderItemTest extends Specification {
     }
 
     @Unroll
-    def 'shall calculate gross total correctly'() {
+    def 'shall gross total = #grossTotal when quantity = #quantity, net price per piece = #netPricePerPiece, vatRate = #vatRate'() {
         expect:
         new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate).grossTotal == grossTotal
 
