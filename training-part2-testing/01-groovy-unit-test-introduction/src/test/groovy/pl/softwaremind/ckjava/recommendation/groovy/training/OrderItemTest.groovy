@@ -7,10 +7,10 @@ class OrderItemTest extends Specification {
 
     @Unroll
     def 'shall not allow to create OrderItem with invalid parameters (#code, #name, #quantity, #netPricePerPiece, #vatRate)'() {
-        when:
+        when: 'order item is being created with invalid parameters'
         new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
 
-        then:
+        then: 'order item shall not be created successfully'
         thrown(OrderException)
 
         where:
@@ -30,11 +30,12 @@ class OrderItemTest extends Specification {
 
     @Unroll
     def 'shall net total = #netTotal and gross total = #grossTotal when quantity = #quantity, net price per piece = #netPricePerPiece, vatRate = #vatRate'() {
-        given:
+        given: 'order item'
         def item = new OrderItem('code', 'name', quantity, netPricePerPiece, vatRate)
 
-        expect:
+        expect: 'net total = quantity x net price per piece'
         item.netTotal   == netTotal
+        and: 'gross total = net total x (1 + vat rate)'
         item.grossTotal == grossTotal
 
         where:
