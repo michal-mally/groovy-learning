@@ -100,7 +100,7 @@ class OrderTest extends Specification {
         order.items as List == itemsAdded
     }
 
-    def 'shall return correct net total'() {
+    def 'shall calculate totals correctly'() {
         given:
         def order = new Order('order number 1234')
 
@@ -112,21 +112,7 @@ class OrderTest extends Specification {
         }
 
         expect:
-        order.netTotal == itemsAdded*.netTotal.sum()
-    }
-
-    def 'shall return correct gross total'() {
-        given:
-        def order = new Order('order number 1234')
-
-        List<OrderItem> itemsAdded = []
-        Integer.randomBetween(1, 15).times {
-            def item = OrderItem.withDefault()
-            order.addItem(item)
-            itemsAdded << item
-        }
-
-        expect:
+        order.netTotal   == itemsAdded*.netTotal.sum()
         order.grossTotal == itemsAdded*.grossTotal.sum()
     }
 
