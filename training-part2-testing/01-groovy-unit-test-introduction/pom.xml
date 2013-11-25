@@ -20,6 +20,9 @@
         <groovy-eclipse-compiler.version>2.8.0-01</groovy-eclipse-compiler.version>
         <groovy-eclipse-batch.version>2.1.8-01</groovy-eclipse-batch.version>
 
+        <!-- plugin versions -->
+        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+
         <!-- Groovy version and scope -->
         <groovy.version>2.1.8</groovy.version>
         <groovy.scope>test</groovy.scope>
@@ -29,6 +32,7 @@
 
         <!-- test dependency versions -->
         <testng.version>6.8.7</testng.version>
+        <spock.version>0.7-groovy-2.0</spock.version>
     </properties>
     <build>
         <plugins>
@@ -60,6 +64,23 @@
                 <version>${groovy-eclipse-compiler.version}</version>
                 <extensions>true</extensions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit4</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
@@ -81,6 +102,12 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
