@@ -77,4 +77,13 @@ public class Order {
         return total;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "number='" + number + '\'' +
+                ", items=" + items +
+                ", closed=" + closed +
+                '}';
+    }
+
 }
