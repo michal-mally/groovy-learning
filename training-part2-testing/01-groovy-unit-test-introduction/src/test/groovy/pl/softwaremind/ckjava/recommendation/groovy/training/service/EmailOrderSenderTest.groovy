@@ -9,9 +9,6 @@ import pl.softwaremind.ckjava.recommendation.groovy.training.mail.EmailServer
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.junit.Assert.assertThat
-import static pl.softwaremind.ckjava.recommendation.groovy.training.matcher.EmailAttachmentsMatcher.hasAttachments
-
 class EmailOrderSenderTest extends Specification {
 
     List<Email> sentEmails = []
@@ -64,7 +61,7 @@ class EmailOrderSenderTest extends Specification {
         sentEmails.size() == 1
         def email = sentEmails[0]
         and: 'has order as attachment'
-        assertThat email, hasAttachments(order)
+        email.attachments == [order]
         and: 'has correctly set properties'
         email.from == this.from
         email.to == recipient
