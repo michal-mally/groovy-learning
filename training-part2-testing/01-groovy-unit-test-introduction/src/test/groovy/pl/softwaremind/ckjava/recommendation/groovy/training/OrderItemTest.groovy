@@ -5,27 +5,32 @@ import spock.lang.Unroll
 
 class OrderItemTest extends Specification {
 
+    def params = [code: 'code', name: 'name', quantity: 2.00, netPricePerPiece: 3.00, vatRate: 0.23]
+
     @Unroll
-    def 'shall not allow to create OrderItem with invalid parameters (#code, #name, #quantity, #netPricePerPiece, #vatRate)'() {
-        when: 'order item is being created with invalid parameters'
-        new OrderItem(code, name, quantity, netPricePerPiece, vatRate)
+    def 'shall not allow to create OrderItem with #paramName = #paramValue'() {
+        given: 'one of the parameter has invalid value'
+        params[paramName] = paramValue
+
+        when: 'order item is being created'
+        new OrderItem(params.code, params.name, params.quantity, params.netPricePerPiece, params.vatRate)
 
         then: 'order item shall not be created successfully'
         thrown(OrderException)
 
         where:
-        code   | name   | quantity | netPricePerPiece | vatRate
-        null   | 'name' | 1.00     | 2.00             | 0.23
-        ''     | 'name' | 1.00     | 2.00             | 0.23
-        'code' | null   | 1.00     | 2.00             | 0.23
-        'code' | ''     | 1.00     | 2.00             | 0.23
-        'code' | 'name' | null     | 2.00             | 0.23
-        'code' | 'name' | 1.00     | null             | 0.23
-        'code' | 'name' | 1.00     | -2.00            | 0.23
-        'code' | 'name' | 1.00     | 2.00             | null
-        'code' | 'name' | 1.00     | 2.00             | -0.10
-        'code' | 'name' | 1.00     | 2.00             | 1.01
-        'code' | 'name' | 1.00     | 2.00             | 23.00
+        paramName          | paramValue
+        'code'             | null
+        'code'             | ''
+        'name'             | null
+        'name'             | ''
+        'quantity'         | null
+        'netPricePerPiece' | null
+        'netPricePerPiece' | -2.00
+        'vatRate'          | null
+        'vatRate'          | -0.10
+        'vatRate'          | 1.01
+        'vatRate'          | 23.00
     }
 
     @Unroll
