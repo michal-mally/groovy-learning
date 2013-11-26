@@ -15,18 +15,15 @@ class EmailOrderSenderTest extends Specification {
 
     int throwExceptionCount = 0
 
-    def emailServer = new EmailServer() {
-
-        @Override
-        void sendEmail(Email email) {
-            if (throwExceptionCount > 0) {
-                throwExceptionCount--
-                throw new EmailSendingException("Unable to send email!")
+    def emailServer = [
+            sendEmail: { email ->
+                if (throwExceptionCount) {
+                    throwExceptionCount--
+                    throw new EmailSendingException("Unable to send email!")
+                }
+                sentEmails << email
             }
-            sentEmails << email
-        }
-
-    }
+    ] as EmailServer
 
     def from = "no-reply@example.com"
 
