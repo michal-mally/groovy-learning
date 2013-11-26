@@ -1,5 +1,6 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training.service
 
+import org.mockito.ArgumentCaptor
 import pl.softwaremind.ckjava.recommendation.groovy.training.domain.Order
 import pl.softwaremind.ckjava.recommendation.groovy.training.domain.OrderException
 import pl.softwaremind.ckjava.recommendation.groovy.training.domain.OrderItem
@@ -9,19 +10,12 @@ import pl.softwaremind.ckjava.recommendation.groovy.training.mail.EmailServer
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static org.mockito.Matchers.any
+import static org.mockito.Mockito.*
+
 class EmailOrderSenderTest extends Specification {
 
-    List<Email> sentEmails = []
-
-    int throwExceptionCount = 0
-
-    def emailServer = { email ->
-        if (throwExceptionCount) {
-            throwExceptionCount--
-            throw new EmailSendingException("Unable to send email!")
-        }
-        sentEmails << email
-    } as EmailServer
+    def emailServer = mock(EmailServer)
 
     def from = "no-reply@example.com"
 
@@ -38,7 +32,7 @@ class EmailOrderSenderTest extends Specification {
         then: 'sending is not allowed'
         thrown OrderException
         and: 'there is no interaction with email server'
-        ! sentEmails
+        verifyZeroInteractions(emailServer)
     }
 
     def 'shall send closed order properly'() {
@@ -53,8 +47,9 @@ class EmailOrderSenderTest extends Specification {
         orderSender.sendOrder(recipient, order)
 
         then: 'one email is sent'
-        sentEmails.size() == 1
-        def email = sentEmails[0]
+        def emailCaptor = new ArgumentCaptor<Email>()
+        verify(emailServer, times(1)).sendEmail(emailCaptor.capture())
+        def email = emailCaptor.value
         and: 'has order as attachment'
         email.attachments == [order]
         and: 'has correctly set properties'
@@ -76,13 +71,18 @@ $from"""
                 .addItem(OrderItem.withDefault())
                 .close()
         and: 'first (and second) attempt fails'
-        this.throwExceptionCount = attemptFails
+        def stubber = doThrow(new EmailSendingException("Error sending email"))
+        if (attemptFails == 2) {
+            stubber = stubber.doThrow(new EmailSendingException("Error sending email"))
+        }
+        stubber.doNothing()
+                .when(emailServer).sendEmail(any(Email))
 
         when: 'order is being sent to recipient'
         orderSender.sendOrder('recipient', order)
 
         then: 'email is sent'
-        sentEmails.size() == 1
+        verify(emailServer, times(attemptFails + 1)).sendEmail(any(Email))
 
         where:
         attemptFails << [1, 2]
@@ -93,16 +93,17 @@ $from"""
         def order = new Order('order number 1234')
                 .addItem(OrderItem.withDefault())
                 .close()
-        and: 'first (and second) attempt fails'
-        this.throwExceptionCount = 3
+        and: 'all attempts to send email fail'
+        doThrow(new EmailSendingException("Error sending email!"))
+                .when(emailServer).sendEmail(any(Email))
 
         when: 'order is being sent to recipient'
         orderSender.sendOrder('recipient', order)
 
         then: 'sender gives up'
         thrown OrderException
-        and: 'email is not sent'
-        ! sentEmails
+        and: 'maximum 3 attempts are made'
+        verify(emailServer, times(3)).sendEmail(any(Email))
     }
 
 }
