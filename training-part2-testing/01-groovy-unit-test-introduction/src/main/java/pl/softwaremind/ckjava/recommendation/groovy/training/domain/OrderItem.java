@@ -1,9 +1,8 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training;
+package pl.softwaremind.ckjava.recommendation.groovy.training.domain;
 
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
-import static pl.softwaremind.ckjava.recommendation.groovy.training.OrderItemValidator.validate;
 
 public class OrderItem {
 
@@ -24,7 +23,7 @@ public class OrderItem {
         this.netPricePerPiece = netPricePerPiece;
         this.vatRate = vatRate;
 
-        validate(this);
+        OrderItemValidator.validate(this);
     }
 
     public String getCode() {

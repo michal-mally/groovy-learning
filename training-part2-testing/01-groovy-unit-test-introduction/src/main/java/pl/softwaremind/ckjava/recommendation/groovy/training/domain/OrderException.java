@@ -1,4 +1,4 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training;
+package pl.softwaremind.ckjava.recommendation.groovy.training.domain;
 
 public class OrderException extends RuntimeException {
 

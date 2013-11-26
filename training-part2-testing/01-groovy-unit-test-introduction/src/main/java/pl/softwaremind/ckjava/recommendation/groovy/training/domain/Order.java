@@ -1,4 +1,4 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training;
+package pl.softwaremind.ckjava.recommendation.groovy.training.domain;
 
 import java.math.BigDecimal;
 import java.util.Collection;

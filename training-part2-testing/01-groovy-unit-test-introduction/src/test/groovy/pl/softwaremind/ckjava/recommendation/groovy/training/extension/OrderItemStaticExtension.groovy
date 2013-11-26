@@ -1,5 +1,6 @@
 package pl.softwaremind.ckjava.recommendation.groovy.training.extension
-import pl.softwaremind.ckjava.recommendation.groovy.training.OrderItem
+
+import pl.softwaremind.ckjava.recommendation.groovy.training.domain.OrderItem
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 

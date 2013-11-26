@@ -1,4 +1,4 @@
-package pl.softwaremind.ckjava.recommendation.groovy.training
+package pl.softwaremind.ckjava.recommendation.groovy.training.domain
 
 import spock.lang.Specification
 import spock.lang.Unroll
